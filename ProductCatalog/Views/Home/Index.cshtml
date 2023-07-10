@@ -1,0 +1,58 @@
+﻿@model IEnumerable<ProductCatalog.Models.Product>
+
+@{
+    ViewData["Title"] = "GetAll";
+}
+
+<h1 > Our Productes</h1>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 d-flex justify-content-center mb-5">
+    <div class="col">
+        @using (Html.BeginForm())
+        {
+               <div class="form-group">
+                    <div class="col-md-10">
+                         @Html.DropDownList("CategoryId", (SelectList)@ViewBag.Categories,"Select Option" ,htmlAttributes: new { @class = "form-control", @onchange="this.form.submit()" })
+                    </div>    
+               </div>
+
+        }
+    </div>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+
+    @foreach (var item in Model) {
+   
+        <div class="col">
+           <div class="card">
+          
+
+                @if (item.Category.Name == "Phones")
+                {
+                        <img src="~/images/p.png" class="card-img-top" alt="...">
+                }
+                else if (item.Category.Name == "Televisions")
+                {
+                                <img src="~/images/t.png" class="card-img-top" alt="...">
+                }
+                else
+                {
+                               <img src="~/images/r2.jpg"class="card-img-top" alt="...">
+
+                }
+
+              <div class="card-body">
+                    <h5 class="card-title"> Product Name : @Html.DisplayFor(modelItem => item.Name)</h5>
+                    <p class="card-text">  Price : @Html.DisplayFor(modelItem => item.price)</p>
+                    <p class="card-text">  Category : @Html.DisplayFor(modelItem => item.Category.Name)</p>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">Details</a> 
+              </div>
+            </div>
+         </div>
+         
+
+      
+    }
+ 
+</div>
